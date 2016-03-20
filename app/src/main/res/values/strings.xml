@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">MapBoxDemo</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="direction_dialog_title">Enter the point to display the route</string>
+    <string name="marker_dialog_title">Enter the point to display the marker</string>
+    <string name="dialog_positive_text">OK</string>
+    <string name="title_activity_setting_fragment">SettingFragment</string>
+    <string name="access_token_dialog_title"></string>
+    <string name="access_token_dialog_message"></string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
+    <string name="arrival">Arrival</string>
+    <string name="departure">Departure</string>
+    <string name="map">Map</string>
+    <string name="setting">Settings</string>
+</resources>
