@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.mapbox.mapboxsdk.annotations.Marker;
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
@@ -27,6 +28,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -118,6 +120,10 @@ public class MapFragment extends Fragment {
                         marker.remove();
                     }
                 });
+                TextView latitude = (TextView) view.findViewById(R.id.latitude);
+                TextView longitude = (TextView) view.findViewById(R.id.longitude);
+                latitude.setText(marker.getTitle());
+                longitude.setText(marker.getSnippet());
                 return view;
             }
         });
@@ -159,8 +165,8 @@ public class MapFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 LatLng latLng = mapView.getLatLng();
-                latDepartureView.setText(Double.toString(latLng.getLatitude()));
-                lonDepartureView.setText(Double.toString(latLng.getLongitude()));
+                latDepartureView.setText(String.format(Locale.US, "%f", latLng.getLatitude()));
+                lonDepartureView.setText(String.format(Locale.US, "%f", latLng.getLongitude()));
                 directionDialog.show();
             }
         });
@@ -176,10 +182,14 @@ public class MapFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         try {
-                            Float latitude = Float.parseFloat(latitudeView.getText().toString());
-                            Float longitude = Float.parseFloat(longitudeView.getText().toString());
+                            String latitudeString = latitudeView.getText().toString();
+                            String longitudeString = longitudeView.getText().toString();
+                            Float latitude = Float.parseFloat(latitudeString);
+                            Float longitude = Float.parseFloat(longitudeString);
                             MarkerOptions options = new MarkerOptions()
                                     .position(new LatLng(latitude, longitude));
+                            options.title(latitudeString);
+                            options.snippet(longitudeString);
                             mapView.addMarker(options);
                         } catch (NumberFormatException e) {
                             e.printStackTrace();
@@ -192,8 +202,8 @@ public class MapFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 LatLng latLng = mapView.getLatLng();
-                latitudeView.setText(Double.toString(latLng.getLatitude()));
-                longitudeView.setText(Double.toString(latLng.getLongitude()));
+                latitudeView.setText(String.format(Locale.US, "%f", latLng.getLatitude()));
+                longitudeView.setText(String.format(Locale.US, "%f", latLng.getLongitude()));
                 markerDialog.show();
             }
         });
@@ -222,8 +232,8 @@ public class MapFragment extends Fragment {
     }
 
     private String getRequestUrl(Float latDep, Float lonDep, Float latArr, Float lonArr) {
-        String latlng = String.format("%f,%f;%f,%f", lonDep, latDep, lonArr, latArr);
-        return String.format("https://api.mapbox.com/v4/directions/mapbox.driving/%s.json?access_token=%s", latlng, accessToken);
+        String latLng = String.format(Locale.US, "%f,%f;%f,%f", lonDep, latDep, lonArr, latArr);
+        return String.format("https://api.mapbox.com/v4/directions/mapbox.driving/%s.json?access_token=%s", latLng, accessToken);
     }
 
     private PolylineOptions parseJson(String response) {

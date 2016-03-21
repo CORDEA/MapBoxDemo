@@ -18,11 +18,13 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:id="@+id/latitude"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"/>
 
             <TextView
+                android:id="@+id/longitude"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"/>
